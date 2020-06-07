@@ -38,7 +38,7 @@ namespace GrpcClient
                     {
                         await Task.Delay(5000, stoppingToken);
                         _logger.LogInformation($"Calling test webapi ");
-                        var response = httpClient.GetAsync("https://hellomachine:443/test").Result;
+                        var response = httpClient.GetAsync("http://hellomachine:80/test").Result;
                         _logger.LogInformation(await response.Content.ReadAsStringAsync());
 
                         await Task.Delay(5000, stoppingToken);
