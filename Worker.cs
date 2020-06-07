@@ -27,7 +27,7 @@ namespace GrpcClient
 
             var client = new Greeter.GreeterClient(channel);
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://hellomachine:5001/");
+            httpClient.BaseAddress = new Uri("https://hellomachine:8080/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
