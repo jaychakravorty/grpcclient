@@ -21,15 +21,27 @@ namespace GrpcClient
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            var channel = GrpcChannel.ForAddress("https://grpcserver:8080");
+            var client = new Greeter.GreeterClient(channel);
+            try
             {
-                var channel = GrpcChannel.ForAddress("https://localhost:5001");
-                var client = new Greeter.GreeterClient(channel);
-                _logger.LogInformation($"Sending ping to {channel.Target}");
-                var reply = await client.SayHelloAsync(new HelloRequest { Name = "Ping" });
-                _logger.LogInformation($"{reply.Message} recieved at {Environment.MachineName}");
-                await Task.Delay(5000, stoppingToken);
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    _logger.LogInformation($"Sending ping to {channel.Target}");
+                    var reply = await client.SayHelloAsync(new HelloRequest { Name = "Ping" });
+                    _logger.LogInformation($"{reply.Message} recieved at {Environment.MachineName}");
+                    await Task.Delay(5000, stoppingToken);
+                }
             }
+            catch (Exception e)
+            {
+                _logger.LogInformation(e.Message);
+            }
+            finally
+            {
+                await channel.ShutdownAsync();
+            }
+           
         }
     }
 }
