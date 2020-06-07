@@ -21,7 +21,7 @@ namespace GrpcClient
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var channel = GrpcChannel.ForAddress("https://localhost:443");
+            var channel = GrpcChannel.ForAddress("https://grpcserver:443");
             var client = new Greeter.GreeterClient(channel);
             try
             {
