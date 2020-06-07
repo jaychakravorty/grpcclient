@@ -27,7 +27,7 @@ namespace GrpcClient
 
             var client = new Greeter.GreeterClient(channel);
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://hellomachine:8080/");
+            //httpClient.BaseAddress = new Uri("http://172.30.199.219:8080/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -39,7 +39,7 @@ namespace GrpcClient
                     {
                         await Task.Delay(5000, stoppingToken);
                         _logger.LogInformation($"Calling test webapi hosted at {httpClient.BaseAddress}");
-                        var response = httpClient.GetAsync("https://hellomachine:5001/test").Result;
+                        var response = httpClient.GetAsync("https://hellomachine:8080/test").Result;
                         _logger.LogInformation(await response.Content.ReadAsStringAsync());
 
                         await Task.Delay(5000, stoppingToken);
