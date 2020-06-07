@@ -39,7 +39,7 @@ namespace GrpcClient
                     {
                         await Task.Delay(5000, stoppingToken);
                         _logger.LogInformation($"Calling test webapi hosted at {httpClient.BaseAddress}");
-                        var response = httpClient.GetAsync("https://hellomachine:8080/test").Result;
+                        var response = httpClient.GetAsync("http://hellomachine:8080/test").Result;
                         _logger.LogInformation(await response.Content.ReadAsStringAsync());
 
                         await Task.Delay(5000, stoppingToken);
@@ -51,12 +51,14 @@ namespace GrpcClient
                     catch (Exception e)
                     {
                         _logger.LogInformation(e.Message);
+                        _logger.LogInformation(e.InnerException.Message);
                     }
                 }
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
+                _logger.LogInformation(e.InnerException.Message);
             }
             finally
             {
